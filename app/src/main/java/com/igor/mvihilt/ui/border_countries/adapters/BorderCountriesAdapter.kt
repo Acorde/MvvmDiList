@@ -9,33 +9,21 @@ import com.igor.mvihilt.modules.Country
 import kotlinx.android.synthetic.main.item_country.view.*
 import javax.inject.Inject
 
-class BorderCountriesAdapter @Inject constructor() : RecyclerView.Adapter<BorderCountriesAdapter.ViewHolder>() {
+class BorderCountriesAdapter @Inject constructor() :
+    RecyclerView.Adapter<BorderCountriesAdapter.ViewHolder>() {
 
 
     private var mCountries: List<Country>? = null
-    private var mOnItemClick: ((Country) -> Unit)? = null
 
     fun setData(countries: List<Country>) {
         mCountries = countries
     }
 
-    fun setOnItemClick(onItemClick: (Country) -> Unit) {
-        this.mOnItemClick = onItemClick
-    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         mCountries?.let { list ->
             list[position].let { country ->
                 holder.bindData(country)
-                holder.itemView.setOnClickListener {
-                    mOnItemClick?.let { listener ->
-                        country.borders?.let {
-                            if (it.isNotEmpty()) {
-                                listener.invoke(country)
-                            }
-                        }
-                    }
-                }
             }
         }
     }

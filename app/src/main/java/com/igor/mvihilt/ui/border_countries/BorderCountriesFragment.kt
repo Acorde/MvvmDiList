@@ -1,13 +1,11 @@
 package com.igor.mvihilt.ui.border_countries
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -16,7 +14,6 @@ import com.igor.mvihilt.modules.Country
 import com.igor.mvihilt.ui.MainActivity
 import com.igor.mvihilt.ui.MainStateEvent
 import com.igor.mvihilt.ui.border_countries.adapters.BorderCountriesAdapter
-import com.igor.mvihilt.ui.counties.CountriesFragmentDirections
 import com.igor.mvihilt.utils.DataState
 import com.igor.mvihilt.utils.showWithView
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,21 +71,6 @@ class BorderCountriesFragment : Fragment() {
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 boarder_countries_rv.adapter = adapter
                 adapter.setData(countries)
-
-                adapter.setOnItemClick { selectedCountry ->
-                    Log.d("IgorTest", "Selected county is: ${selectedCountry.name}")
-                    activity?.let {
-                        val navHostFragment =
-                            it.supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
-                        navHostFragment.navController.let { navController ->
-                            navController.navigate(
-                                CountriesFragmentDirections.actionCountriesFragmentToBorderCountriesFragment(
-                                    selectedCountry
-                                )
-                            )
-                        }
-                    }
-                }
             }
         }
 
