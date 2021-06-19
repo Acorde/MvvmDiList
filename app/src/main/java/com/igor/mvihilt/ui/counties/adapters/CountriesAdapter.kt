@@ -15,7 +15,7 @@ class CountriesAdapter @Inject constructor() : RecyclerView.Adapter<CountriesAda
     private var mCountries: List<Country>? = null
     private var mOnItemClick: ((Country) -> Unit)? = null
 
-    fun setData(countries: List<Country>) {
+    fun setData(countries: List<Country>?) {
         mCountries = countries
     }
 

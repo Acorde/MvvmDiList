@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.igor.mvihilt.R
+import com.igor.mvihilt.enum.SortTypeEnum
 import com.igor.mvihilt.modules.Country
-import com.igor.mvihilt.ui.MainActivity
-import com.igor.mvihilt.ui.MainStateEvent
+import com.igor.mvihilt.ui.BaseCountryFragment
+import com.igor.mvihilt.ui.CountriesActivity
+import com.igor.mvihilt.ui.counties.MainStateEvent
 import com.igor.mvihilt.ui.border_countries.adapters.BorderCountriesAdapter
 import com.igor.mvihilt.utils.DataState
 import com.igor.mvihilt.utils.showWithView
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_border_countries.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BorderCountriesFragment : Fragment() {
+class BorderCountriesFragment : BaseCountryFragment() {
 
     private val args: BorderCountriesFragmentArgs by navArgs()
 
@@ -40,24 +41,28 @@ class BorderCountriesFragment : Fragment() {
                 subscribeObservers()
             }
         }
-
-
     }
+
+
+    override fun sortData(sortType: SortTypeEnum) {
+        viewModel.sortData(sortType)
+    }
+
 
     private fun subscribeObservers() {
         viewModel.borderDataSet.observe(this, { borderDataSet ->
 
             when (borderDataSet) {
-                is DataState.Loading -> (activity as MainActivity).main_progress_bar.showWithView(
+                is DataState.Loading -> (activity as CountriesActivity).main_progress_bar.showWithView(
                     true
                 )
 
                 is DataState.Success -> {
-                    (activity as MainActivity).main_progress_bar.showWithView(false)
+                    (activity as CountriesActivity).main_progress_bar.showWithView(false)
                     showCountriesRecyclerView(borderDataSet.data)
                 }
                 is DataState.Error -> {
-                    (activity as MainActivity).main_progress_bar.showWithView(false)
+                    (activity as CountriesActivity).main_progress_bar.showWithView(false)
                     view?.let { Snackbar.make(it, "Error", Snackbar.LENGTH_SHORT).show() }
                 }
             }
@@ -67,10 +72,14 @@ class BorderCountriesFragment : Fragment() {
     private fun showCountriesRecyclerView(data: List<Country>?) {
         data?.let { countries ->
             context?.let { context ->
-                boarder_countries_rv.layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                boarder_countries_rv.adapter = adapter
+                if(adapter.itemCount == 0){
+                    boarder_countries_rv.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    boarder_countries_rv.adapter = adapter
+                }
+
                 adapter.setData(countries)
+                adapter.notifyDataSetChanged()
             }
         }
 

@@ -5,16 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.igor.mvihilt.R
+import com.igor.mvihilt.enum.SortTypeEnum
 import com.igor.mvihilt.modules.Country
-import com.igor.mvihilt.ui.CountriesViewModel
-import com.igor.mvihilt.ui.MainActivity
-import com.igor.mvihilt.ui.MainStateEvent
+import com.igor.mvihilt.ui.BaseCountryFragment
+import com.igor.mvihilt.ui.CountriesActivity
 import com.igor.mvihilt.ui.counties.adapters.CountriesAdapter
 import com.igor.mvihilt.utils.DataState
 import com.igor.mvihilt.utils.showWithView
@@ -25,12 +24,13 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class CountriesFragment : Fragment() {
+class CountriesFragment : BaseCountryFragment() {
 
     @Inject
     lateinit var adapter: CountriesAdapter
 
     private val viewModel: CountriesViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +44,7 @@ class CountriesFragment : Fragment() {
         subscribeObservers()
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,20 +54,19 @@ class CountriesFragment : Fragment() {
     }
 
     private fun subscribeObservers() {
-
         viewModel.dataState.observe(this, { dateState ->
 
             when (dateState) {
-                is DataState.Loading -> (activity as MainActivity).main_progress_bar.showWithView(
+                is DataState.Loading -> (activity as CountriesActivity).main_progress_bar.showWithView(
                     true
                 )
 
                 is DataState.Success -> {
-                    (activity as MainActivity).main_progress_bar.showWithView(false)
+                    (activity as CountriesActivity).main_progress_bar.showWithView(false)
                     showCountriesRecyclerView(dateState.data)
                 }
                 is DataState.Error -> {
-                    (activity as MainActivity).main_progress_bar.showWithView(false)
+                    (activity as CountriesActivity).main_progress_bar.showWithView(false)
                     view?.let {
                         Snackbar.make(
                             it,
@@ -81,7 +81,11 @@ class CountriesFragment : Fragment() {
         })
     }
 
-    private fun showCountriesRecyclerView(countries: List<Country>) {
+    override fun sortData(sortType: SortTypeEnum) {
+        viewModel.sortData(sortType)
+    }
+
+    private fun showCountriesRecyclerView(countries: List<Country>?) {
         context?.let { context ->
             countries_rv.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -105,6 +109,5 @@ class CountriesFragment : Fragment() {
         }
 
     }
-
 
 }

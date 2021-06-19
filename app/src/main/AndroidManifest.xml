@@ -10,8 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".MyApplication"
-        android:theme="@style/Theme.MVIHilt">
-        <activity android:name=".ui.MainActivity">
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.CountriesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

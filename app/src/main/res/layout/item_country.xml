@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         style="@style/card_view_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         app:cardUseCompatPadding="true"
         android:clipToPadding="true"
-        android:theme="@style/Theme.MVIHilt.ActionBarChoseUserRipple"
+        android:theme="@style/AppTheme.ActionBarChoseUserRipple"
         android:background="?attr/selectableItemBackground"
         android:foreground="?android:attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -56,5 +56,5 @@
                 tools:text="Native name is: Israel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

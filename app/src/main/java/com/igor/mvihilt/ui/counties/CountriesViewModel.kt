@@ -1,12 +1,13 @@
-package com.igor.mvihilt.ui
+package com.igor.mvihilt.ui.counties
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.igor.mvihilt.enum.SortTypeEnum
 import com.igor.mvihilt.modules.Country
 import com.igor.mvihilt.repository.Repository
 import com.igor.mvihilt.utils.DataState
+import com.igor.mvihilt.utils.sort
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -17,11 +18,10 @@ import javax.inject.Inject
 class CountriesViewModel @Inject constructor(private val mRepository: Repository) : ViewModel() {
 
 
-    private val mCountries: MutableLiveData<DataState<List<Country>>> = MutableLiveData()
+    private var mCountries: MutableLiveData<DataState<List<Country>?>> = MutableLiveData()
 
-    val dataState: LiveData<DataState<List<Country>>>
+    val dataState: MutableLiveData<DataState<List<Country>?>>
         get() = mCountries
-
 
 
     fun setStateEvent(mainStateEvent: MainStateEvent) {
@@ -30,11 +30,22 @@ class CountriesViewModel @Inject constructor(private val mRepository: Repository
                 is MainStateEvent.GetCountrieEvent -> mRepository.getCountries()
                     .onEach { dataState -> mCountries.value = dataState }
                     .launchIn(viewModelScope)
-                is MainStateEvent.None -> { }
+                is MainStateEvent.None -> {
+                }
             }
         }
+
+
     }
 
+
+    fun sortData(sortType: SortTypeEnum) {
+        viewModelScope.launch {
+            sort(sortType, dataState).onEach { borderDataSet ->
+                dataState.value = borderDataSet
+            }.launchIn(viewModelScope)
+        }
+    }
 
 
 }

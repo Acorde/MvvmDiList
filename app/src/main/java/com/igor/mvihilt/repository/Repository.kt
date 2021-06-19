@@ -14,7 +14,6 @@ class Repository(private val restApi: RestApi) {
 
         try {
             val data = restApi.getAllCities()
-
             emit(DataState.Success(data))
         } catch (e: Exception) {
             emit(DataState.Error(e))

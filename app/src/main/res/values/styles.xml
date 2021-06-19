@@ -11,8 +11,27 @@
     </style>
 
 
-    <style name="Theme.MVIHilt.ActionBarChoseUserRipple">
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
+
+
+    </style>
+
+    <!-- Style to replace actionbar overflow icon. set item 'android:actionOverflowButtonStyle' in AppTheme -->
+    <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/filter_icon</item>
+        <item name="actionOverflowMenuStyle">@style/Widget.AppCompat.Light.PopupMenu.Overflow</item>
+    </style>
+
+    <style name="AppTheme.ActionBarChoseUserRipple">
         <item name="colorControlHighlight">@color/white_EFE8E8</item>
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <!-- Required for pre-Lollipop. -->
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownVerticalOffset">-4.0dip</item>
+        <!-- Required for Lollipop. -->
+        <item name="android:overlapAnchor">false</item>
     </style>
 </resources>
