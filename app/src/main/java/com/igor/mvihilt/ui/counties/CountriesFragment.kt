@@ -82,7 +82,9 @@ class CountriesFragment : BaseCountryFragment() {
     }
 
     override fun sortData(sortType: SortTypeEnum) {
-        viewModel.sortData(sortType)
+        if (viewModel.dataState.value != DataState.Loading) {
+            viewModel.sortData(sortType)
+        }
     }
 
     private fun showCountriesRecyclerView(countries: List<Country>?) {

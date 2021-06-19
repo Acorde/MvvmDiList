@@ -45,7 +45,10 @@ class BorderCountriesFragment : BaseCountryFragment() {
 
 
     override fun sortData(sortType: SortTypeEnum) {
-        viewModel.sortData(sortType)
+        if(viewModel.borderDataSet.value != DataState.Loading){
+            viewModel.sortData(sortType)
+        }
+
     }
 
 
