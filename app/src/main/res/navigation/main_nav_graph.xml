@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_countriesFragment"
-        android:name="com.igor.mvihilt.ui.CountriesFragment"
+        android:name="com.igor.mvihilt.ui.counties.CountriesFragment"
         android:label="CountriesFragment"
         tools:layout="@layout/fragment_countries">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_borderCountriesFragment"
-        android:name="com.igor.mvihilt.ui.BorderCountriesFragment"
+        android:name="com.igor.mvihilt.ui.border_countries.BorderCountriesFragment"
         android:label="BorderCountriesFragment"
         tools:layout="@layout/fragment_border_countries">
         <argument

@@ -1,4 +1,4 @@
-package com.igor.mvihilt.ui
+package com.igor.mvihilt.ui.border_countries
 
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.igor.mvihilt.R
 import com.igor.mvihilt.modules.Country
+import com.igor.mvihilt.ui.MainActivity
+import com.igor.mvihilt.ui.MainStateEvent
+import com.igor.mvihilt.ui.border_countries.adapters.BorderCountriesAdapter
+import com.igor.mvihilt.ui.counties.CountriesFragmentDirections
 import com.igor.mvihilt.utils.DataState
 import com.igor.mvihilt.utils.showWithView
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +32,7 @@ class BorderCountriesFragment : Fragment() {
     private val viewModel: BorderCountriesViewModel by viewModels()
 
     @Inject
-    lateinit var adapter: CountriesAdapter
+    lateinit var adapter: BorderCountriesAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +68,7 @@ class BorderCountriesFragment : Fragment() {
     }
 
     private fun showCountriesRecyclerView(data: List<Country>?) {
-        data?.let { countries->
+        data?.let { countries ->
             context?.let { context ->
                 boarder_countries_rv.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

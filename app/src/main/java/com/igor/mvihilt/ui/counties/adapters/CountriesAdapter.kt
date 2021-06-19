@@ -1,4 +1,4 @@
-package com.igor.mvihilt.ui
+package com.igor.mvihilt.ui.counties.adapters
 
 import android.view.LayoutInflater
 import android.view.View

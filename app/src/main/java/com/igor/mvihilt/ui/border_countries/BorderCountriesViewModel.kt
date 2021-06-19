@@ -1,10 +1,11 @@
-package com.igor.mvihilt.ui
+package com.igor.mvihilt.ui.border_countries
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.igor.mvihilt.modules.Country
 import com.igor.mvihilt.repository.Repository
+import com.igor.mvihilt.ui.MainStateEvent
 import com.igor.mvihilt.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

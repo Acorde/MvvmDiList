@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val mRepository: Repository) : ViewModel() {
+class CountriesViewModel @Inject constructor(private val mRepository: Repository) : ViewModel() {
 
 
     private val mCountries: MutableLiveData<DataState<List<Country>>> = MutableLiveData()

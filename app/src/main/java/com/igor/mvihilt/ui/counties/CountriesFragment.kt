@@ -1,4 +1,4 @@
-package com.igor.mvihilt.ui
+package com.igor.mvihilt.ui.counties
 
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.igor.mvihilt.R
 import com.igor.mvihilt.modules.Country
+import com.igor.mvihilt.ui.CountriesViewModel
+import com.igor.mvihilt.ui.MainActivity
+import com.igor.mvihilt.ui.MainStateEvent
+import com.igor.mvihilt.ui.counties.adapters.CountriesAdapter
 import com.igor.mvihilt.utils.DataState
 import com.igor.mvihilt.utils.showWithView
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,18 +30,18 @@ class CountriesFragment : Fragment() {
     @Inject
     lateinit var adapter: CountriesAdapter
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: CountriesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        subscribeObservers()
+        viewModel.setStateEvent(MainStateEvent.GetCountrieEvent)
 
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.setStateEvent(MainStateEvent.GetCountrieEvent)
+        subscribeObservers()
     }
 
     override fun onCreateView(
@@ -63,7 +67,13 @@ class CountriesFragment : Fragment() {
                 }
                 is DataState.Error -> {
                     (activity as MainActivity).main_progress_bar.showWithView(false)
-                    view?.let { Snackbar.make(it, dateState.exception.message.toString(), Snackbar.LENGTH_SHORT).show() }
+                    view?.let {
+                        Snackbar.make(
+                            it,
+                            dateState.exception.message.toString(),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
 
