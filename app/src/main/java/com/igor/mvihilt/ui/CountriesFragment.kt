@@ -1,6 +1,7 @@
 package com.igor.mvihilt.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,6 +69,10 @@ class CountriesFragment : Fragment() {
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             countries_rv.adapter = adapter
             adapter.setData(countries)
+
+            adapter.setOnItemClick {
+                Log.d("IgorTest", "Selected county is: ${it.name}")
+            }
         }
 
     }

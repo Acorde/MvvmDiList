@@ -13,15 +13,26 @@ class CountriesAdapter @Inject constructor() : RecyclerView.Adapter<CountriesAda
 
 
     private var mCountries: List<Country>? = null
+    private var mOnItemClick: ((Country) -> Unit)? = null
 
-    public fun setData(countries: List<Country>) {
+    fun setData(countries: List<Country>) {
         mCountries = countries
     }
 
+    fun setOnItemClick(onItemClick: (Country) -> Unit) {
+        this.mOnItemClick = onItemClick
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        mCountries?.let {
-            holder.bindData(it[position])
+        mCountries?.let { list ->
+            list[position].let { country ->
+                holder.bindData(country)
+                holder.itemView.setOnClickListener {
+                    mOnItemClick?.let { listener ->
+                        listener.invoke(country)
+                    }
+                }
+            }
         }
     }
 
