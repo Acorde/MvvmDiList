@@ -2,8 +2,9 @@ package com.igor.mvihilt.modules
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class Language {
+class Language : Serializable {
     @SerializedName("iso639_1")
     @Expose
     var iso6391: String? = null

@@ -20,4 +20,17 @@ class Repository(private val restApi: RestApi) {
             emit(DataState.Error(e))
         }
     }
+
+    suspend fun getBorderCountries(codes : String): Flow<DataState<List<Country>>> = flow {
+
+        emit(DataState.Loading)
+
+        try {
+            val data = restApi.getBordersCities(codes)
+
+            emit(DataState.Success(data))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
+    }
 }

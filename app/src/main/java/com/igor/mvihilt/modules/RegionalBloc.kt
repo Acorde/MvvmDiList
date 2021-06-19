@@ -1,9 +1,10 @@
-package com.hofit.hofitcellcomtest.repository.models
+package com.igor.mvihilt.modules
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class RegionalBloc {
+class RegionalBloc : Serializable {
     @SerializedName("acronym")
     @Expose
     var acronym: String? = null

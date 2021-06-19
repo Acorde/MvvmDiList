@@ -29,7 +29,11 @@ class CountriesAdapter @Inject constructor() : RecyclerView.Adapter<CountriesAda
                 holder.bindData(country)
                 holder.itemView.setOnClickListener {
                     mOnItemClick?.let { listener ->
-                        listener.invoke(country)
+                        country.borders?.let {
+                            if (it.isNotEmpty()) {
+                                listener.invoke(country)
+                            }
+                        }
                     }
                 }
             }

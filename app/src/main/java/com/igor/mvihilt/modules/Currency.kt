@@ -2,8 +2,9 @@ package com.igor.mvihilt.modules
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class Currency {
+class Currency : Serializable {
     @SerializedName("code")
     @Expose
     var code: String? = null

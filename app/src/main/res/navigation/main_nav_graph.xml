@@ -3,11 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph.xml"
-    app:startDestination="@id/countriesFragment">
+    app:startDestination="@id/nav_countriesFragment">
 
     <fragment
-        android:id="@+id/countriesFragment"
+        android:id="@+id/nav_countriesFragment"
         android:name="com.igor.mvihilt.ui.CountriesFragment"
-        android:label="fragment_countries"
-        tools:layout="@layout/fragment_countries" />
+        android:label="CountriesFragment"
+        tools:layout="@layout/fragment_countries">
+        <action
+            android:id="@+id/action_countriesFragment_to_borderCountriesFragment"
+            app:destination="@id/nav_borderCountriesFragment"
+            app:popUpToInclusive="false"
+            />
+
+    </fragment>
+    <fragment
+        android:id="@+id/nav_borderCountriesFragment"
+        android:name="com.igor.mvihilt.ui.BorderCountriesFragment"
+        android:label="BorderCountriesFragment"
+        tools:layout="@layout/fragment_border_countries">
+        <argument
+            android:name="extra_selected_country"
+            android:defaultValue="@null"
+            app:argType="com.igor.mvihilt.modules.Country"
+            app:nullable="true" />
+    </fragment>
 </navigation>

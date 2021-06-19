@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.igor.mvihilt.R
 import com.igor.mvihilt.modules.Country
 import com.igor.mvihilt.utils.DataState
@@ -30,6 +32,11 @@ class CountriesFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         subscribeObservers()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.setStateEvent(MainStateEvent.GetCountrieEvent)
     }
 
@@ -56,6 +63,7 @@ class CountriesFragment : Fragment() {
                 }
                 is DataState.Error -> {
                     (activity as MainActivity).main_progress_bar.showWithView(false)
+                    view?.let { Snackbar.make(it, dateState.exception.message.toString(), Snackbar.LENGTH_SHORT).show() }
                 }
             }
 
@@ -70,8 +78,19 @@ class CountriesFragment : Fragment() {
             countries_rv.adapter = adapter
             adapter.setData(countries)
 
-            adapter.setOnItemClick {
-                Log.d("IgorTest", "Selected county is: ${it.name}")
+            adapter.setOnItemClick { selectedCountry ->
+                Log.d("IgorTest", "Selected county is: ${selectedCountry.name}")
+                activity?.let {
+                    val navHostFragment =
+                        it.supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
+                    navHostFragment.navController.let { navController ->
+                        navController.navigate(
+                            CountriesFragmentDirections.actionCountriesFragmentToBorderCountriesFragment(
+                                selectedCountry
+                            )
+                        )
+                    }
+                }
             }
         }
 

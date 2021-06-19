@@ -2,8 +2,9 @@ package com.igor.mvihilt.modules
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class Translations {
+class Translations : Serializable {
     @SerializedName("de")
     @Expose
     var de: String? = null

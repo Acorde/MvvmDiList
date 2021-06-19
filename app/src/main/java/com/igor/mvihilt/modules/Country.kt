@@ -2,7 +2,7 @@ package com.igor.mvihilt.modules
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.hofit.hofitcellcomtest.repository.models.RegionalBloc
+import java.io.Serializable
 
 data class Country(
     @SerializedName("name")
@@ -103,4 +103,4 @@ data class Country(
     @Expose
     var cioc: String? = null
 
-)
+) : Serializable

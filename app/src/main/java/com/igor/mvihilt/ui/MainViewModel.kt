@@ -10,7 +10,6 @@ import com.igor.mvihilt.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,16 +22,20 @@ class MainViewModel @Inject constructor(private val mRepository: Repository) : V
     val dataState: LiveData<DataState<List<Country>>>
         get() = mCountries
 
+
+
     fun setStateEvent(mainStateEvent: MainStateEvent) {
         viewModelScope.launch {
             when (mainStateEvent) {
                 is MainStateEvent.GetCountrieEvent -> mRepository.getCountries()
                     .onEach { dataState -> mCountries.value = dataState }
                     .launchIn(viewModelScope)
-                is MainStateEvent.None -> {}
+                is MainStateEvent.None -> { }
             }
         }
     }
+
+
 
 }
 
