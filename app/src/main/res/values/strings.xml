@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MVIHilt</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="item_native_name">Native name is: %s</string>
+    <string name="item_english_name">English name is: %s</string>
 </resources>
