@@ -24,22 +24,21 @@ class BorderCountriesViewModel @Inject constructor(private val mRepository: Repo
     val borderDataSet: MutableLiveData<DataState<List<Country>?>>
         get() = mBorderedCountries
 
-    fun getBorderCountries(country: Country, mainStateEvent: MainStateEvent) {
+    fun getBorderCountries(country: Country?, mainStateEvent: MainStateEvent) {
         viewModelScope.launch {
             when (mainStateEvent) {
                 is MainStateEvent.GetCountrieEvent -> mRepository.getBorderCountries(
-                    country.borders!!.joinToString(separator = ";")
+                    country?.borders!!.joinToString(separator = ";")
                 )
                     .onEach { borderDataSet -> mBorderedCountries.value = borderDataSet }
                     .launchIn(viewModelScope)
-                is MainStateEvent.None -> {
-                }
+                is MainStateEvent.Sort -> sortData(mainStateEvent.sortType)
+
             }
         }
     }
 
-    fun sortData(sortType: SortTypeEnum) {
-
+    private fun sortData(sortType: SortTypeEnum) {
         viewModelScope.launch {
             sort(sortType, borderDataSet).onEach { borderDataSet ->
                 mBorderedCountries.value = borderDataSet

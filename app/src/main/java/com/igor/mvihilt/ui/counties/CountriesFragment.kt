@@ -83,7 +83,7 @@ class CountriesFragment : BaseCountryFragment() {
 
     override fun sortData(sortType: SortTypeEnum) {
         if (viewModel.dataState.value != DataState.Loading) {
-            viewModel.sortData(sortType)
+            viewModel.setStateEvent(MainStateEvent.Sort(sortType))
         }
     }
 

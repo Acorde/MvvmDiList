@@ -13,8 +13,8 @@ import com.igor.mvihilt.enum.SortTypeEnum
 import com.igor.mvihilt.modules.Country
 import com.igor.mvihilt.ui.BaseCountryFragment
 import com.igor.mvihilt.ui.CountriesActivity
-import com.igor.mvihilt.ui.counties.MainStateEvent
 import com.igor.mvihilt.ui.border_countries.adapters.BorderCountriesAdapter
+import com.igor.mvihilt.ui.counties.MainStateEvent
 import com.igor.mvihilt.utils.DataState
 import com.igor.mvihilt.utils.showWithView
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,8 +45,8 @@ class BorderCountriesFragment : BaseCountryFragment() {
 
 
     override fun sortData(sortType: SortTypeEnum) {
-        if(viewModel.borderDataSet.value != DataState.Loading){
-            viewModel.sortData(sortType)
+        if (viewModel.borderDataSet.value != DataState.Loading) {
+            viewModel.getBorderCountries(null, MainStateEvent.Sort(sortType))
         }
 
     }
@@ -75,7 +75,7 @@ class BorderCountriesFragment : BaseCountryFragment() {
     private fun showCountriesRecyclerView(data: List<Country>?) {
         data?.let { countries ->
             context?.let { context ->
-                if(adapter.itemCount == 0){
+                if (adapter.itemCount == 0) {
                     boarder_countries_rv.layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                     boarder_countries_rv.adapter = adapter

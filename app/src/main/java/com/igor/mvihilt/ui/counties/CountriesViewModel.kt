@@ -30,8 +30,9 @@ class CountriesViewModel @Inject constructor(private val mRepository: Repository
                 is MainStateEvent.GetCountrieEvent -> mRepository.getCountries()
                     .onEach { dataState -> mCountries.value = dataState }
                     .launchIn(viewModelScope)
-                is MainStateEvent.None -> {
-                }
+
+                is MainStateEvent.Sort -> sortData(mainStateEvent.sortType)
+
             }
         }
 
@@ -39,7 +40,7 @@ class CountriesViewModel @Inject constructor(private val mRepository: Repository
     }
 
 
-    fun sortData(sortType: SortTypeEnum) {
+    private fun sortData(sortType: SortTypeEnum) {
         viewModelScope.launch {
             sort(sortType, dataState).onEach { borderDataSet ->
                 dataState.value = borderDataSet
@@ -52,6 +53,8 @@ class CountriesViewModel @Inject constructor(private val mRepository: Repository
 
 
 sealed class MainStateEvent {
+    class Sort(val sortType: SortTypeEnum) : MainStateEvent()
     object GetCountrieEvent : MainStateEvent()
-    object None : MainStateEvent()
+
+
 }
